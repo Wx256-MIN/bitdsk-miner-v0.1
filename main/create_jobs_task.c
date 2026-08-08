@@ -42,12 +42,7 @@ static int hex_decode(const char *hex, uint8_t *out, int max_out)
     return len;
 }
 
-/* 
 static void hex_encode(const uint8_t *data, int len, char *out)
-{
-    // ... all the code inside ...
-}
-*/
 {
     for (int i = 0; i < len; i++) {
         sprintf(out + i * 2, "%02x", data[i]);
