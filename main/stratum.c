@@ -288,22 +288,3 @@ bool stratum_submit_share(const char *job_id, const char *extranonce2_hex,
 
     char req[512];
     
-{
-    static uint32_t s_submit_id = 100;
-    char nonce_hex[9];
-    snprintf(nonce_hex, sizeof(nonce_hex), "%08" PRIx32, nonce);
-
-    char req[512];  // ← Keep only this declaration
-    if (version_bits != 0) {
-        char version_hex[9];
-        snprintf(version_hex, sizeof(version_hex), "%08" PRIx32, version_bits);
-        snprintf(req, sizeof(req),
-                 "{\"id\":%" PRIu32 ",\"method\":\"mining.submit\",\"params\":[\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\"]}",
-                 s_submit_id++, s_username, job_id, extranonce2_hex, ntime_hex, nonce_hex, version_hex);
-    } else {
-        snprintf(req, sizeof(req),
-                 "{\"id\":%" PRIu32 ",\"method\":\"mining.submit\",\"params\":[\"%s\",\"%s\",\"%s\",\"%s\",\"%s\"]}",
-                 s_submit_id++, s_username, job_id, extranonce2_hex, ntime_hex, nonce_hex);
-    }
-    return send_line(req);
-}
