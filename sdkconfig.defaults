@@ -1,0 +1,24 @@
+# Use the custom partition table instead of the default one.
+CONFIG_PARTITION_TABLE_CUSTOM=y
+CONFIG_PARTITION_TABLE_CUSTOM_FILENAME="partitions.csv"
+
+# TODO: confirm the actual flash size on your board (`esptool.py flash_id`)
+# and match it here - wrong size means either wasted space or a corrupted
+# partition table.
+CONFIG_ESPTOOLPY_FLASHSIZE_4MB=y
+
+# The mining tasks poll fast and the ASIC UART read uses short timeouts;
+# a slightly longer task-watchdog window avoids false-positive resets
+# during bring-up while you're still debugging timing. Tighten this back
+# up once things are stable.
+CONFIG_ESP_TASK_WDT_TIMEOUT_S=10
+
+# Bump the main task stack a bit since app_main does a fair amount of
+# sequential setup (NVS, Wi-Fi, ASIC init) before handing off to tasks.
+CONFIG_ESP_MAIN_TASK_STACK_SIZE=4096
+
+# If your board's module has PSRAM, uncomment the next line - it isn't
+# required by anything in this codebase today, but the real ESP-Miner
+# project uses it and you may want the headroom later (e.g. a larger
+# embedded web UI).
+# CONFIG_SPIRAM=y
