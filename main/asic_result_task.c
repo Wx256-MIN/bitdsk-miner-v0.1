@@ -8,6 +8,7 @@
  * create_jobs_task so a burst of results doesn't delay new work going out.
  */
 
+#include <inttypes.h>
 #include <string.h>
 #include <math.h>
 #include "global_state.h"
@@ -127,7 +128,7 @@ void asic_result_task(void *pvParameters)
         if (difficulty >= (double)pool_diff) {
             char extranonce2_hex[17];
             char counter_hex[9];
-            snprintf(counter_hex, sizeof(counter_hex), "%08x", job.extranonce2);
+            snprintf(counter_hex, sizeof(counter_hex), "%08" PRIx32, job.extranonce2);
             int en2_len = g_state.extranonce2_len > 0 ? g_state.extranonce2_len : 4;
             int pad = en2_len * 2 - (int)strlen(counter_hex);
             if (pad < 0) pad = 0;
@@ -138,7 +139,7 @@ void asic_result_task(void *pvParameters)
             char ntime_hex[9];
             hex_encode(job.ntime, 4, ntime_hex);
 
-            ESP_LOGI(TAG, "share found: difficulty %.0f (pool wants %u)", difficulty, pool_diff);
+            ESP_LOGI(TAG, "share found: difficulty %.0f (pool wants %" PRIu32 ")", difficulty, pool_diff);
             stratum_submit_share(job.pool_job_id, extranonce2_hex, ntime_hex, resp.nonce, 0);
         }
     }
