@@ -4,6 +4,7 @@
  * reconstruction of undocumented byte-level details.
  */
 
+#include "driver/uart.h"
 #include <string.h>
 #include "bm1397.h"
 #include "serial.h"
