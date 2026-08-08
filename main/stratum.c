@@ -287,8 +287,7 @@ bool stratum_submit_share(const char *job_id, const char *extranonce2_hex,
     snprintf(nonce_hex, sizeof(nonce_hex), "%08" PRIx32, nonce);
 
     char req[512];
-    bool stratum_submit_share(const char *job_id, const char *extranonce2_hex,
-                           const char *ntime_hex, uint32_t nonce, uint32_t version_bits)
+    
 {
     static uint32_t s_submit_id = 100;
     char nonce_hex[9];
