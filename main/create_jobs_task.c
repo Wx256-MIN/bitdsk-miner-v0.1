@@ -17,6 +17,7 @@
  * trusting the output, the same way you'd verify the BM1397 framing.
  */
 
+#include <inttypes.h>
 #include <string.h>
 #include <stdlib.h>
 #include "global_state.h"
@@ -41,7 +42,12 @@ static int hex_decode(const char *hex, uint8_t *out, int max_out)
     return len;
 }
 
+/* 
 static void hex_encode(const uint8_t *data, int len, char *out)
+{
+    // ... all the code inside ...
+}
+*/
 {
     for (int i = 0; i < len; i++) {
         sprintf(out + i * 2, "%02x", data[i]);
@@ -96,7 +102,7 @@ static bool build_job(const mining_notify_t *notify, uint32_t extranonce2_counte
      * don't wrap within a single pool session (32-bit counter is generous
      * for that). */
     char counter_hex[9];
-    snprintf(counter_hex, sizeof(counter_hex), "%08x", extranonce2_counter);
+    snprintf(counter_hex, sizeof(counter_hex), "%08" PRIx32, extranonce2_counter);
     int pad = en2_len * 2 - (int)strlen(counter_hex);
     if (pad < 0) pad = 0;
     memset(extranonce2_hex, '0', pad);
